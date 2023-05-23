@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Code Editor</title>
+  <style>
+    #editor {
+      width: 100%;
+      height: 300px;
+      border: 1px solid #ccc;
+    }
+    #output {
+      margin-top: 10px;
+      font-family: monospace;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Code Editor for C++</h1>
+  <h3>Type your C++ code below:</h3>
+  <div id="editor" contenteditable="true"></div>
+  <button onclick="runCode()">Run</button>
+  <div id="output"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.7/ace.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.7/ext-language_tools.js"></script>
+  <script>
+    // Initialize Ace editor
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.session.setMode("ace/mode/c_cpp");
+    editor.setOptions({
+      enableBasicAutocompletion: true,
+      enableSnippets: true,
+      enableLiveAutocompletion: true,
+    });
+
+    // Run the code
+    function runCode() {
+      var code = editor.getValue();
+      var outputElement = document.getElementById("output");
+      outputElement.innerText = "";
+
+      // Check for errors (dummy check)
+      var errors = checkForErrors(code);
+
+      if (errors.length > 0) {
+        // Display errors
+        for (var i = 0; i < errors.length; i++) {
+          var errorElement = document.createElement("div");
+          errorElement.className = "error";
+          errorElement.innerText = errors[i];
+          outputElement.appendChild(errorElement);
+        }
+      } else {
+        // Execute the code (dummy execution)
+        outputElement.innerText = "Code executed successfully.";
+      }
+    }
+
+    // Dummy function to check for errors in the code
+    function checkForErrors(code) {
+      var errors = [];
+
+      // Example: Check for missing semicolon
+      if (code.indexOf(";") === -1) {
+        errors.push("Missing semicolon.");
+      }
+
+      // Example: Check for missing curly brace
+      if (code.indexOf("{") === -1 || code.indexOf("}") === -1) {
+        errors.push("Missing curly brace.");
+      }
+
+      return errors;
+    }
+  </script>
+</body>
+</html>
